@@ -6,8 +6,8 @@
       <b-navbar-brand>Mark's Vue</b-navbar-brand>
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-text>Navbar text</b-nav-text>
-          <b-nav-text>test</b-nav-text>
+          <b-nav-text><router-link to="/" exact>Main</router-link></b-nav-text>
+          <b-nav-text><router-link to="/datascience" exact>Data Science</router-link>test</b-nav-text>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -26,4 +26,19 @@ export default {
 
 <style scoped>
 
+.router-link-active {
+  background:#eee;
+  color: #444;
+}
+
+.navbar-text {
+  color:#000;
+}
+
+a {
+  border-radius: 10px;
+  padding: 6px 8px;
+  color: #000;
+  text-decoration: none;
+}
 </style>

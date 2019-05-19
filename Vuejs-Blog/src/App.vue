@@ -10,7 +10,12 @@
 </template>
 
 <script>
+import cardCascade from './components/CardCascade.vue';
+
 export default {
+  components:{
+    'card-cascade':cardCascade,
+  },
   data () {
     return {
       title:'Mark Vue Blog'
