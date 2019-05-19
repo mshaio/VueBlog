@@ -1,23 +1,24 @@
 import Vue from 'vue'
 import App from './App.vue'
 import BootstrapVue from 'bootstrap-vue'
-//import VueRouter from 'vue-router'
-//import Routes from './routes'
+import VueRouter from 'vue-router'
+import Routes from './routes'
 Vue.use(BootstrapVue);
-//Vue.use(VueRouter);
+Vue.use(VueRouter);
 
-// const router = new VueRouter({
-//   routes: Routes
-// });
+const router = new VueRouter({
+  routes: Routes,
+  mode:'history'
+});
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import Jumbotron from './Jumbotron.vue'
-Vue.component('jumbotron', Jumbotron)
+// import Jumbotron from './Jumbotron.vue'
+// Vue.component('jumbotron', Jumbotron)
 //
-// import Navbar from './Navbar.vue'
-// Vue.component('navbar', Navbar)
+import Navbar from './components/Navbar.vue'
+Vue.component('navbar', Navbar)
 //
 // import Card from './Card.vue'
 // Vue.component('card', Card)
@@ -26,6 +27,6 @@ Vue.component('jumbotron', Jumbotron)
 //Link to a backend
 new Vue({
   el: '#app',
-  render: h => h(App)
-  //router: router
+  render: h => h(App),
+  router: router
 })

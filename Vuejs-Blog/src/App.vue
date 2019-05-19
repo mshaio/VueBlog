@@ -1,6 +1,9 @@
 <template>
   <div>
-    <jumbotron></jumbotron>
+    <navbar></navbar>
+    <router-view></router-view>
+    <router-view name="card"></router-view>
+
     <p>test App</p>
 
   </div>

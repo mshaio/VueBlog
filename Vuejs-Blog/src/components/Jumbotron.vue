@@ -34,6 +34,6 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     color: #FFF;
-    min-height: 600px;
+    min-height: 550px;
 }
 </style>
