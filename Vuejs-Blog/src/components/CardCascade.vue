@@ -1,15 +1,16 @@
 <template>
   <div>
+    <li>{{blogs[0].id}}</li>
     <b-card-group columns>
       <b-card
-        title="Card title that wraps to a new line"
+        v-bind:title= "blogs[0].title"
         img-src="https://placekitten.com/g/400/450"
         img-alt="Image"
         img-top
       >
         <b-card-text>
-          This is a wider card with supporting text below as a natural lead-in to additional content.
-          This content is a little bit longer.
+          {{getContentPortion(blogs[0].content,100)}}
+          
         </b-card-text>
       </b-card>
 
@@ -60,13 +61,52 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      title:'Mark Vue Blog'
+import db from './firebaseInit'
+export default{
+  data(){
+    return{
+      id:this.$route.params.id,
+      blogs:[],
+    }
+  },
+  methods: {
+    getContentPortion (content, maxSize) {
+      if(maxSize >= content.length) {
+        return content;
+      }
+
+      return content.substring(0, maxSize) + '...'
+    },
+    getContentOfType (blogs, blog_type) {
+      var blogs_with_correct_type = []
+      for (var i=0; i <= blogs.length; i++){
+        if (blogs[i].type == blog_type){
+          blogs_with_correct_type.push(blogs[i].content)
+        }
+      }
+
+      return blogs_with_correct_type
+    }
+  },
+  created(){
+    //this.$http.get('http://jsonplaceholder.typicode.com/posts/' + this.id).then(function(data){
+      //this.blog = data.body;
+     db.collection('Blogs').orderBy('Type').get().then(querySnapshot =>{
+       querySnapshot.forEach(doc => {
+         //console.log(doc.data());
+         const data={
+           'id': doc.id,
+           'content': doc.data().Content,
+           'type': doc.data().Type,
+           'title': doc.data().Title,
+           'blog_id':doc.data().blog_id,
+
+         }
+        this.blogs.push(data)
+       })
+     })
     }
   }
-}
 </script>
 
 <style scoped>

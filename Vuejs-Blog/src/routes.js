@@ -18,5 +18,10 @@ export default[
 
   //{path:'/add', component: addBlog}
   {path:'/datascience', component: cardCascade},
-  {path:'/datascience/:id', component: singleBlog}
+  {
+    path:'/datascience/:blog_id',
+    name:'datascience-single',
+    component: singleBlog
+  },
+  {path:'/webdev', component: cardCascade},
 ]
