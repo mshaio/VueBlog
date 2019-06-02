@@ -10,7 +10,6 @@
       >
         <b-card-text>
           {{getContentPortion(blogs[0].content,100)}}
-          
         </b-card-text>
       </b-card>
 
@@ -23,9 +22,10 @@
         </blockquote>
       </b-card>
 
-      <b-card title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
+      {{getContent("Vue")}}
+      <b-card v-for="blog in blogs" title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
         <b-card-text>
-          This card has supporting text below as a natural lead-in to additional content.
+          {{getBlogOfType("Vue",blog.id)}}
         </b-card-text>
         <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
       </b-card>
@@ -67,6 +67,7 @@ export default{
     return{
       id:this.$route.params.id,
       blogs:[],
+      blogs_with_correct_genera:[]
     }
   },
   methods: {
@@ -77,16 +78,34 @@ export default{
 
       return content.substring(0, maxSize) + '...'
     },
-    getContentOfType (blogs, blog_type) {
+    getBlogOfType (blog_type, doc_id) {
+      //Error: this method does not know anything about blogs[i].type because it does
+      //not have access to the data here.
       var blogs_with_correct_type = []
-      for (var i=0; i <= blogs.length; i++){
-        if (blogs[i].type == blog_type){
-          blogs_with_correct_type.push(blogs[i].content)
+      var blogs_doc_id = []
+
+      for (var i=0; i <= this.blogs.length-1; i++){
+        if (this.blogs[i].type == blog_type){
+          blogs_with_correct_type.push(this.blogs[i].content);
+          blogs_doc_id.push(this.blogs[i].id)
         }
       }
+      this.blogs_with_correct_genera = blogs_with_correct_type
+      console.log(this.blogs_with_correct_genera)
+      var location = blogs_doc_id.indexOf(doc_id)
 
-      return blogs_with_correct_type
-    }
+      return this.blogs_with_correct_genera[location]
+    },
+    getContent (blog_type) {
+      var blogs_with_correct_type = []
+      for(var i=0; i<= this.blogs.length-1; i++){
+        if (this.blogs[i].type == blog_type){
+          blogs_with_correct_type.push(this.blogs[i].content);
+        }
+      }
+      this.blogs_with_correct_genera = blogs_with_correct_type
+      return
+    },
   },
   created(){
     //this.$http.get('http://jsonplaceholder.typicode.com/posts/' + this.id).then(function(data){
