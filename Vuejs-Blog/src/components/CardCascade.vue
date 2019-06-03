@@ -23,8 +23,9 @@
       </b-card>
 
       {{getContent("Vue")}}
-      <b-card v-for="blog in blogs" title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
+      <b-card v-for="blog in blogs_duplicate" title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
         <b-card-text>
+          <!--{{getBlogOfType("Vue",blog.id)}}-->
           {{getBlogOfType("Vue",blog.id)}}
         </b-card-text>
         <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
@@ -67,7 +68,9 @@ export default{
     return{
       id:this.$route.params.id,
       blogs:[],
-      blogs_with_correct_genera:[]
+      //blogs_duplicate:[],
+      blogs_with_correct_genera:[],
+      in_blogs: false,
     }
   },
   methods: {
@@ -91,19 +94,43 @@ export default{
         }
       }
       this.blogs_with_correct_genera = blogs_with_correct_type
-      console.log(this.blogs_with_correct_genera)
+      //console.log(this.blogs_with_correct_genera)
       var location = blogs_doc_id.indexOf(doc_id)
+      //console.log(this.blogs[location])
 
       return this.blogs_with_correct_genera[location]
     },
     getContent (blog_type) {
+      //var blogs_duplicate = this.blogs
+      this.blogs_duplicate = this.blogs
+      console.log(this.blogs)
       var blogs_with_correct_type = []
+      var blogs_with_incorrect_type = []
+      var all_blog_contents = []
+      for (var i = 0; i<= this.blogs.length-1; i++){
+        all_blog_contents.push(this.blogs[i].content)
+      }
+
       for(var i=0; i<= this.blogs.length-1; i++){
         if (this.blogs[i].type == blog_type){
-          blogs_with_correct_type.push(this.blogs[i].content);
+          blogs_with_correct_type.push(this.blogs[i].content)
+        }
+        if (this.blogs[i].type != blog_type){
+          blogs_with_incorrect_type.push(this.blogs[i].content)
         }
       }
       this.blogs_with_correct_genera = blogs_with_correct_type
+      console.log(this.blogs_with_correct_genera)
+      //blogs_with_correct_type does not have the blog.id attribute so maybe try
+      //to remove unneeded blogs from blogs based on what is in blogs_with_correct_genera
+      for (var i=0; i<= blogs_with_incorrect_type.length-1; i++){
+        if (all_blog_contents.includes(blogs_with_incorrect_type[i]) == true) {
+          this.in_blogs = true
+          //console.log(blogs_with_incorrect_type[i])
+          this.blogs_duplicate.splice(all_blog_contents.indexOf(blogs_with_incorrect_type[i]),1)
+          //console.log(this.blogs_duplicate)
+        }
+      }
       return
     },
   },
