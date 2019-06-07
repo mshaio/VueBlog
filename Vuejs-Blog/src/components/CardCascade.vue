@@ -26,7 +26,9 @@
       <b-card v-for="blog in blogs_duplicate" title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
         <b-card-text>
           <!--{{getBlogOfType("Vue",blog.id)}}-->
-          {{getBlogOfType("Vue",blog.id)}}
+          <router-link v-bind:to="{name:'webdev-single', params: {blog_id: blog.blog_id}}">
+            {{getBlogOfType("Vue",blog.id)}}
+          </router-link>
         </b-card-text>
         <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
       </b-card>
@@ -58,17 +60,23 @@
         <div slot="footer"><small class="text-muted">Footer Text</small></div>
       </b-card>
     </b-card-group>
+    <SingleBlog v-bind:blogs_duplicate="blogs_duplicate"></SingleBlog>
   </div>
 </template>
 
 <script>
-import db from './firebaseInit'
+import db from './firebaseInit';
+import SingleBlog from './SingleBlog.vue';
+
 export default{
+  components: {
+       'SingleBlog':SingleBlog,
+  },
   data(){
     return{
       id:this.$route.params.id,
       blogs:[],
-      //blogs_duplicate:[],
+      blogs_duplicate:[],
       blogs_with_correct_genera:[],
       in_blogs: false,
     }
@@ -82,8 +90,6 @@ export default{
       return content.substring(0, maxSize) + '...'
     },
     getBlogOfType (blog_type, doc_id) {
-      //Error: this method does not know anything about blogs[i].type because it does
-      //not have access to the data here.
       var blogs_with_correct_type = []
       var blogs_doc_id = []
 
@@ -94,16 +100,12 @@ export default{
         }
       }
       this.blogs_with_correct_genera = blogs_with_correct_type
-      //console.log(this.blogs_with_correct_genera)
       var location = blogs_doc_id.indexOf(doc_id)
-      //console.log(this.blogs[location])
 
       return this.blogs_with_correct_genera[location]
     },
     getContent (blog_type) {
-      //var blogs_duplicate = this.blogs
       this.blogs_duplicate = this.blogs
-      console.log(this.blogs)
       var blogs_with_correct_type = []
       var blogs_with_incorrect_type = []
       var all_blog_contents = []
@@ -120,9 +122,6 @@ export default{
         }
       }
       this.blogs_with_correct_genera = blogs_with_correct_type
-      console.log(this.blogs_with_correct_genera)
-      //blogs_with_correct_type does not have the blog.id attribute so maybe try
-      //to remove unneeded blogs from blogs based on what is in blogs_with_correct_genera
       for (var i=0; i<= blogs_with_incorrect_type.length-1; i++){
         if (all_blog_contents.includes(blogs_with_incorrect_type[i]) == true) {
           this.in_blogs = true
