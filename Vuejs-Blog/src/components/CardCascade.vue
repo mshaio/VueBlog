@@ -22,12 +22,12 @@
         </blockquote>
       </b-card>
 
-      {{getContent("Vue")}}
+      {{getContent("webdev")}}
       <b-card v-for="blog in blogs_duplicate" title="Title" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
         <b-card-text>
           <!--{{getBlogOfType("Vue",blog.id)}}-->
-          <router-link v-bind:to="{name:'webdev-single', params: {blog_id: blog.blog_id}}">
-            {{getBlogOfType("Vue",blog.id)}}
+          <router-link v-bind:to="{name:'webdev-single', params: {category: blog.type, blog_id: blog.blog_id}}" exact>
+            {{getBlogOfType("webdev",blog.id)}}
           </router-link>
         </b-card-text>
         <b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>

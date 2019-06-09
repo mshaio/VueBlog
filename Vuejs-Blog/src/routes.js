@@ -25,6 +25,12 @@ export default[
   },
   {path:'/webdev', component: cardCascade},
   {
+    path:'/:category',
+    name:'category',
+    component: cardCascade,
+    props: true,
+  },
+  {
     path:'/webdev/:blog_id',
     name:'webdev-single',
     component: singleBlog,

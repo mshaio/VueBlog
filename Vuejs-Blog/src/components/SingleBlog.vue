@@ -18,6 +18,7 @@
     <article>
       <router-link v-bind:to="{name:'webdev-single', params: {blog_id: blogs[blog_id-1].blog_id}}">
         <p>{{blogs[blog_id-1].content}}</p>
+        <!--<p>{{blogs_duplicate}}</p>-->
       </router-link>
     </article>
 
@@ -27,7 +28,9 @@
 <script>
 import db from './firebaseInit'
 export default{
-  props: ["blog_id"],
+  props:
+    ["blog_id"],
+    //"blogs_duplicate",
   data(){
     return{
       id:this.$route.params.id,

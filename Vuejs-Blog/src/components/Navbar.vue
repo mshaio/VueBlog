@@ -7,6 +7,7 @@
         <b-navbar-nav>
           <b-nav-text><router-link to="/" exact>Main</router-link></b-nav-text>
           <b-nav-text><router-link to="/datascience" exact>Data Science</router-link>test</b-nav-text>
+          <b-nav-text><router-link to="/webdev" exact>Web Development</router-link>test</b-nav-text>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -26,11 +27,11 @@ export default {
 <style scoped>
 
 .router-link-active {
-  background:#eee;
+  background:#000;
   color: #444;
 }
 
-.navbar-text {
+.navbar-text .router-link{
   color:#000;
 }
 
